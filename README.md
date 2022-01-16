@@ -1,16 +1,9 @@
 # koa_clone
 
-A new Flutter project.
+KOA app clone
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Decided to do some few screens of an app on my phone whose UI/UX is beyond awesome. [@Koa](https://withkoa.onelink.me/Uy49/bb71642)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![grab-task-gif](app_gif.gif)

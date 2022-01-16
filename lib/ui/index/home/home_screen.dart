@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:koa_clone/constants/assets.dart';
 import 'package:koa_clone/constants/styles.dart';
+import 'package:koa_clone/ui/index/home/saving_goal_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -28,7 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int? currentSaving = 0;
 
-  ScrollController _scrollController = ScrollController();
+  final PageController _pageController = PageController();
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             const SizedBox(
-            height: 75,
-          ),
+              height: 75,
+            ),
             Row(
               children: [
-                SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Text.rich(
                   TextSpan(text: 'Hi ', children: [
                     TextSpan(
@@ -80,8 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.blue,
                       )),
                 ),
-                                  SizedBox(width: 20,),
-
+                const SizedBox(
+                  width: 20,
+                ),
               ],
             ),
             const SizedBox(
@@ -131,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20,10,20,10),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -140,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20,0,20,0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Column(
                 children: List.generate(_pendingActions.length, (index) {
                   return Container(
@@ -168,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20,10,20,10),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -191,98 +200,128 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 5,
-              child: ListView.builder(
-                controller: _scrollController,
-                shrinkWrap: true,
+              height: MediaQuery.of(context).size.height / 4,
+              child: PageView.builder(
+                controller: _pageController,
                 itemCount: _mySavings.length,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  _scrollController.addListener(() {
-                    setState(() {
+                onPageChanged: (index){
+setState(() {
                       currentSaving = index;
                     });
-                  });
-                  return Container(
-                    margin: const EdgeInsets.all(8),
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [BoxShadow(color: kLightGreyColor!)],
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                              decoration: BoxDecoration(
-                                  color: Colors.red[100],
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                'Koa Goal 🎁',
-                                style:
-                                    poppinsMedium.copyWith(color: Colors.red),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              _mySavings.elementAt(index),
-                              style: poppinsBold.copyWith(fontSize: 17),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const Text('KSh 0 / KSh 70k'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const Text(
-                              '1200 days more',
-                              style: poppinsSemiBold,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const CircleAvatar(
-                          radius: 50,
-                          backgroundImage: AssetImage(
-                            Assets.welcomeBanner,
+                },
+                itemBuilder: (context, index) {
+                  
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SavingGoal()));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: kLightGreyColor!,
+                              //spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 5), // changes position of shadow
+                          ), 
+                          BoxShadow(
+                              color: Colors.transparent,
+                              blurRadius: 7,
+                              offset: Offset(-5, 0), // changes position of shadow
+                          ), 
+                          BoxShadow(
+                              color: Colors.transparent,
+                              blurRadius: 7,
+                              offset: Offset(0, -5), // changes position of shadow
+                          ), 
+                          
+                          ]
                           ),
-                        ),
-                      ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                decoration: BoxDecoration(
+                                    color: Colors.red[100],
+                    border: Border.all(color: Colors.red),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Text(
+                                  'Koa Goal 🎁',
+                                  style:
+                                      poppinsMedium.copyWith(color: Colors.red),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                _mySavings.elementAt(index),
+                                style: poppinsBold.copyWith(fontSize: 17),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Text('KSh 0 / KSh 70k'),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Text(
+                                '1200 days more',
+                                style: poppinsSemiBold,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          const CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage(
+                              Assets.welcomeBanner,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: List<Widget>.generate(
-                  _mySavings.length,
-                  (index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 3.0),
-                        height: 10.0,
-                        width: 10.0,
-                        decoration: BoxDecoration(
-                            color: currentSaving?.round() == index
-                                ? const Color(0XFF256075)
-                                : const Color(0XFF256075).withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(10.0)),
-                      )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: List<Widget>.generate(
+                    _mySavings.length,
+                    (index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 3.0),
+                          height: 10.0,
+                          width: 10.0,
+                          decoration: BoxDecoration(
+                              color: currentSaving?.round() == index
+                                  ? const Color(0XFF256075)
+                                  : const Color(0XFF256075).withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(10.0)),
+                        )),
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20,10,20,10),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -337,8 +376,8 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 20,
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(20,0,20,0),
-              padding: const EdgeInsets.fromLTRB(20,0,20,0),
+              margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: kLightGreyColor!),
@@ -363,7 +402,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 80,)
+            const SizedBox(
+              height: 80,
+            )
           ],
         ),
       ),

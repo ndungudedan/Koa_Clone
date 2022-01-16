@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:koa_clone/constants/assets.dart';
 import 'package:koa_clone/constants/styles.dart';
+import 'package:koa_clone/ui/index/save/new_saving_screen.dart';
 
 class SaveScreen extends StatelessWidget {
   List<String> _goals = [
@@ -67,7 +68,7 @@ class SaveScreen extends StatelessWidget {
                       return Container(
                         margin: const EdgeInsets.all(10),
                         height: MediaQuery.of(context).size.height / 3,
-                            width: MediaQuery.of(context).size.width / 2.5,
+                        width: MediaQuery.of(context).size.width / 2.5,
                         child: DottedBorder(
                             color: Colors.black,
                             strokeWidth: 3,
@@ -81,10 +82,12 @@ class SaveScreen extends StatelessWidget {
                                     radius: Radius.circular(CardRadius))
                                 ..lineTo(size.width, size.height - CardRadius)
                                 ..arcToPoint(
-                                    Offset(size.width - CardRadius, size.height),
+                                    Offset(
+                                        size.width - CardRadius, size.height),
                                     radius: Radius.circular(CardRadius))
                                 ..lineTo(CardRadius, size.height)
-                                ..arcToPoint(Offset(0, size.height - CardRadius),
+                                ..arcToPoint(
+                                    Offset(0, size.height - CardRadius),
                                     radius: Radius.circular(CardRadius))
                                 ..lineTo(0, CardRadius)
                                 ..arcToPoint(Offset(CardRadius, 0),
@@ -195,24 +198,38 @@ class GoalContainer extends StatelessWidget {
   GoalContainer({required this.label});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      height: MediaQuery.of(context).size.height / 3,
-      width: MediaQuery.of(context).size.width / 2.5,
-      decoration: BoxDecoration(
-          image: const DecorationImage(
-              fit: BoxFit.cover,
-              image: const AssetImage(
-                Assets.welcomeBanner,
-              )),
-          borderRadius: BorderRadius.circular(10)),
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            label,
-            style: poppinsMedium.copyWith(color: Colors.white, fontSize: 15),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return NewSaving();
+        }));
+      },
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        height: MediaQuery.of(context).size.height / 3,
+        width: MediaQuery.of(context).size.width / 2.5,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.center,
+                          colors: [
+                        Color.fromARGB(200, 0, 0, 0),
+                        Colors.transparent
+                      ]),
+            image: const DecorationImage(
+                fit: BoxFit.cover,
+                image:  AssetImage(
+                  Assets.welcomeBanner,
+                )),
+            borderRadius: BorderRadius.circular(10)),
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              label,
+              style: poppinsMedium.copyWith(color: Colors.white, fontSize: 15),
+            ),
           ),
         ),
       ),

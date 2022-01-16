@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:koa_clone/constants/assets.dart';
 import 'package:koa_clone/constants/styles.dart';
-import 'package:koa_clone/ui/create_pin.dart';
+import 'package:koa_clone/ui/create_pin_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override

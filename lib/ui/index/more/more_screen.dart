@@ -58,7 +58,7 @@ List items = [
   {
     Headings.leading.name: Icons.fingerprint,
     Headings.title.name: 'Fingerprint',
-    Headings.trailing.name: Switch(value: false, onChanged: (val) {}),
+    Headings.trailing.name: Switch(value: false, onChanged: (val) {},),
   },
   {
     Headings.leading.name: Icons.person_add,
@@ -189,7 +189,7 @@ class CustomListTile extends StatelessWidget {
                subtitle!=null ?   Text(
                     subtitle??'',
                     style: poppinsRegular,
-                  ):SizedBox()
+                  ):SizedBox(height: 0,)
                 ],
               ),
               Spacer(
